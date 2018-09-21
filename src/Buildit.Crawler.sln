@@ -7,16 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Buildit.Crawler", "Buildit.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Buildit.Crawler.Test", "Buildit.Crawler.Test\Buildit.Crawler.Test.csproj", "{89768180-2F0B-4B7A-8851-474C5D6F4EB1}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{EF5B614D-C62B-4A9F-A4D1-053A772A8A36}"
-	ProjectSection(SolutionItems) = preProject
-		README.md = README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Deployment", "Deployment", "{4A8801B3-C12C-44E2-987A-DCB88EE9DD66}"
-	ProjectSection(SolutionItems) = preProject
-		Buildit.Crawler.Deploy\build.bat = Buildit.Crawler.Deploy\build.bat
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,9 +24,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4A8801B3-C12C-44E2-987A-DCB88EE9DD66} = {EF5B614D-C62B-4A9F-A4D1-053A772A8A36}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {485A25DB-7A59-4B0A-90EE-41BCA261C7F8}
