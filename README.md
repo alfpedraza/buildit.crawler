@@ -12,18 +12,17 @@ git clone https://github.com/alfpedraza/buildit.crawler
 
 ## How to Build
 
-Once you are in the bash command line, to build the code execute the following lines:
-
-# BUILD THE CODE
+Once you are in the bash command line, to build the code, execute the following lines:
 
 ```bash
+# BUILD THE CODE
 cd /home/buildit/buildit.crawler/src
 dotnet build
 ```
 
 ## How to Test
 
-To execute the automated unit test and integration test, run the following commands:
+To execute the unit tests and integration tests, run the following commands:
 
 ```bash
 # TEST THE CODE
@@ -33,13 +32,20 @@ dotnet test
 
 ## How to Run
 
-To execute the application, just run the following commands:
+Finally, to execute the application, just run the following commands:
 
 ```bash
 #RUN THE CODE
 cd /home/buildit/buildit.crawler/src/Buildit.Crawler
 dotnet run https://buildit.wiprodigital.com /home/crawler.txt true
 ```
+
+The command line has three parameters that can be changed, but they don't accept spaces. These are the parameters than can be changed.
+
+  - Domain to Crawl (e.g. https://buildit.wiprodigital.com)
+  - File Path to save the crawl (e.g. /home/crawler.txt)
+  - Boolean Flag to wait the user to press a key (e.g. true)
+ 
 
 ## Documented Trade-Offs
   - I only implemented the "A Href" and "Img Src" regular expression patterns in the hyperlink extractor class, but this could be improved easily adding more regular expression patterns.
