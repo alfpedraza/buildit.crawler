@@ -1,16 +1,45 @@
 # Buildit Crawler
 
+To build, test and run the code you will have to install docker on your Ubuntu machine. Then run the following commands to install the .NET SDK automatically and download the source code:
+
+```bash
+# DOWNLOAD SDK AND SOURCE CODE
+docker run -i -t microsoft/dotnet:2.0-sdk-stretch /bin/bash
+mkdir /home/buildit
+cd /home/buildit
+git clone https://github.com/alfpedraza/buildit.crawler
+```
+
 ## How to Build
 
+Once you are in the bash command line, to build the code execute the following lines:
 
+# BUILD THE CODE
+
+```bash
+cd /home/buildit/buildit.crawler/src
+dotnet build
+```
 
 ## How to Test
 
+To execute the automated unit test and integration test, run the following commands:
 
+```bash
+# TEST THE CODE
+cd /home/buildit/buildit.crawler/src/Buildit.Crawler.Test
+dotnet test
+```
 
 ## How to Run
 
+To execute the application, just run the following commands:
 
+```bash
+#RUN THE CODE
+cd /home/buildit/buildit.crawler/src/Buildit.Crawler
+dotnet run https://buildit.wiprodigital.com /home/crawler.txt true
+```
 
 ## Documented Trade-Offs
   - I only implemented the "A Href" and "Img Src" regular expression patterns in the hyperlink extractor class, but this could be improved easily adding more regular expression patterns.
