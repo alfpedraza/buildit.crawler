@@ -33,7 +33,7 @@ namespace Buildit.Crawler.Test.Entities
         [ExpectedException(typeof(UriFormatException))]
         public void When_DomainUriIsRelative_Then_ExceptionIsThrown()
         {
-            var domainUri = new Uri("/buildit.wiprodigital.com/");
+            var domainUri = new Uri("/buildit.wiprodigital.com/", UriKind.Absolute);
         }
 
         [TestMethod]
