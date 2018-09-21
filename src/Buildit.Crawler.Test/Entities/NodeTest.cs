@@ -30,13 +30,6 @@ namespace Buildit.Crawler.Test.Entities
         }
 
         [TestMethod]
-        [ExpectedException(typeof(UriFormatException))]
-        public void When_DomainUriIsRelative_Then_ExceptionIsThrown()
-        {
-            var domainUri = new Uri("/buildit.wiprodigital.com/", UriKind.Absolute);
-        }
-
-        [TestMethod]
         public void When_DomainAndLinkUriAreSameHost_Then_NodeIsInternal()
         {
             var domainUri = new Uri("https://buildit.wiprodigital.com/");
