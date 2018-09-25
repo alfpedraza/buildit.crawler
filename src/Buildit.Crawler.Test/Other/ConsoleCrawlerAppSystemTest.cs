@@ -1,7 +1,7 @@
 ﻿using Buildit.Crawler.Console;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Buildit.Crawler.Test.Console
+namespace Buildit.Crawler.Test.Other
 {
     [TestClass]
     [TestCategory("SystemTest")]

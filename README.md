@@ -71,10 +71,6 @@ These are the parameters than can be changed:
 
 
 ## Further Development
-  - Include more unit test (I only have 95% of the coverage but mostly because
-    of the integration test)
-  - Include more integration tests (I only include a smoke test to know that
-    the crawler works)
   - Implement "Politeness Policy" as per
     https://en.wikipedia.org/wiki/Web_crawler#Politeness_policy
   - Implement "Parallelization Policy" as per
