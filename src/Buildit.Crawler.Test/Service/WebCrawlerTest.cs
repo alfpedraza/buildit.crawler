@@ -5,114 +5,150 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Buildit.Crawler.Test.Service
 {
     [TestClass]
     public class WebCrawlerTest
     {
-        [TestMethod]
-        public void When_ValidLinks_Then_ReturnValidNodes()
+        #region Helper Members
+
+        private const string DomainBaseUriString = "https://buildit.wiprodigital.com";
+        private const string BaseUriString = "/";
+        private const string HomeUriString = "/home.html";
+        private const string AboutUriString = "/about.html";
+        private const string ContactUriString = "/contact.html";
+        private readonly Uri DomainBase = new Uri(DomainBaseUriString);
+        private readonly Uri BaseUri = new Uri(BaseUriString, UriKind.Relative);
+        private readonly Uri HomeUri = new Uri(HomeUriString, UriKind.Relative);
+        private readonly Uri AboutUri = new Uri(AboutUriString, UriKind.Relative);
+        private readonly Uri ContactUri = new Uri(ContactUriString, UriKind.Relative);
+        private readonly Node BaseNode = new Node(new Uri(DomainBaseUriString), new Uri(BaseUriString, UriKind.Relative));
+        private readonly Node HomeNode = new Node(new Uri(DomainBaseUriString), new Uri(HomeUriString, UriKind.Relative));
+        private readonly Node AboutNode = new Node(new Uri(DomainBaseUriString), new Uri(AboutUriString, UriKind.Relative));
+        private readonly Node ContactNode = new Node(new Uri(DomainBaseUriString), new Uri(ContactUriString, UriKind.Relative));
+
+        private Mock<INodeFactory> _factoryMock;
+        private Mock<IHttp> _httpMock;
+
+        [TestInitialize]
+        public void Initialize()
         {
-            var domainUri = new Uri("https://buildit.wiprodigital.com");
-            var homeUri = new Uri(domainUri, "/home");
-            var aboutUri = new Uri(domainUri, "/about");
-            var contactUri = new Uri(domainUri, "/contact");
+            _factoryMock = new Mock<INodeFactory>();
+            _httpMock = new Mock<IHttp>();
+        }
 
-            var returnList = new List<TestHttpReturn>()
-            {
-                new TestHttpReturn() {
-                    Uri = domainUri,
-                    Response = new HttpGetResponse()
-                    {
-                       Content = "<p>HOME</p><a href='/about'>About</a><a href='/contact'>Contact</a>",
-                       IsSuccess = true,
-                       RequestUri = homeUri
-                    },
-                    ListNode = new List<Node>()
-                    {
-                        new Node(domainUri, new Uri("/about", UriKind.Relative)),
-                        new Node(domainUri, new Uri("/contact", UriKind.Relative))
-                    }
-                },
-                new TestHttpReturn() {
-                    Uri = aboutUri,
-                    Response = new HttpGetResponse()
-                    {
-                       Content = "<p>ABOUT</p><a href='/home'>Home</a><a href='/contact'>Contact</a>",
-                       IsSuccess = true,
-                       RequestUri = aboutUri
-                    },
-                    ListNode = new List<Node>()
-                    {
-                        new Node(domainUri, new Uri("/home", UriKind.Relative)),
-                        new Node(domainUri, new Uri("/contact", UriKind.Relative))
-                    }
-                },
-                new TestHttpReturn() {
-                    Uri = contactUri,
-                    Response = new HttpGetResponse()
-                    {
-                       Content = "<p>CONTACT</p><a href='/home'>Home</a><a href='/about'>About</a>",
-                       IsSuccess = true,
-                       RequestUri = contactUri
-                    },
-                    ListNode = new List<Node>()
-                    {
-                        new Node(domainUri, new Uri("/home", UriKind.Relative)),
-                        new Node(domainUri, new Uri("/about", UriKind.Relative))
-                    }
-                },
-            };
-            var target = CreateTarget(returnList);
-            var actual = target.Crawl(domainUri);
+        #endregion
 
-            Assert.AreEqual(actual.Uri, domainUri);
-            Assert.AreEqual(actual.Nodes[0].Uri, aboutUri);
-            Assert.AreEqual(actual.Nodes[0].Nodes[0].Uri, homeUri);
-            Assert.AreEqual(actual.Nodes[0].Nodes[1].Uri, contactUri);
-            Assert.AreEqual(actual.Nodes[0].Nodes[1].Nodes[0].Uri, homeUri);
-            Assert.AreEqual(actual.Nodes[0].Nodes[1].Nodes[1].Uri, aboutUri);
-            Assert.AreEqual(actual.Nodes[1].Uri, contactUri);
+        [TestMethod]
+        public void When_DomainIsNotFound_Then_ReturnNoChildrenNodes()
+        {
+            // Arrange
+            ArrangeMocks(DomainBase, false, string.Empty, DomainBase, new List<Node>() { });
+            var target = new WebCrawler(_factoryMock.Object, _httpMock.Object);
+
+            //Act
+            var result = target.Crawl(DomainBase);
+
+            // Assert
+            Assert.AreEqual(0, result.Nodes.Count);
         }
 
         [TestMethod]
-        public void When_InvalidResponse_Then_ReturnNoNode()
+        public void When_HtmlDoesntHaveHyperlinks_Then_ReturnNoChildrenNodes()
         {
-            var domainUri = new Uri("https://buildit.wiprodigital.com");
+            // Arrange
+            ArrangeMocks(DomainBase, new List<Node>() { });
+            var target = new WebCrawler(_factoryMock.Object, _httpMock.Object);
 
-            var factoryMock = new Mock<INodeFactory>();
-            var httpMock = new Mock<IHttp>();
-            var response = new HttpGetResponse() { IsSuccess = false };
-            httpMock.Setup(m => m.Get(domainUri)).Returns(response);
+            //Act
+            var result = target.Crawl(DomainBase);
 
-            var target = new WebCrawler(factoryMock.Object, httpMock.Object);
-            var actual = target.Crawl(domainUri);
-
-            Assert.AreEqual(actual.Uri, domainUri);
-            Assert.AreEqual(actual.Nodes.Count, 0);
+            // Assert
+            Assert.AreEqual(0, result.Nodes.Count);
         }
 
-        private IWebCrawler CreateTarget(List<TestHttpReturn> returnList)
+        [TestMethod]
+        public void When_HtmlHasOneHyperlinks_Then_ReturnOneChildNode()
         {
-            var factoryMock = new Mock<INodeFactory>();
-            var httpMock = new Mock<IHttp>();
+            // Arrange
+            ArrangeMocks(DomainBase, new List<Node>() { HomeNode });
+            ArrangeMocks(HomeNode.Uri, new List<Node>() { });
+            var target = new WebCrawler(_factoryMock.Object, _httpMock.Object);
 
-            foreach (var item in returnList)
+            //Act
+            var result = target.Crawl(DomainBase);
+
+            // Assert
+            Assert.AreEqual(1, result.Nodes.Count);
+            Assert.AreEqual(HomeNode.Uri, result.Nodes[0].Uri);
+        }
+
+        [TestMethod]
+        public void When_HtmlHasSeveralHyperlinks_Then_ReturnSeveralChildrenNodes()
+        {
+            // Arrange
+            ArrangeMocks(DomainBase, new List<Node>() { HomeNode, AboutNode, ContactNode });
+            ArrangeMocks(HomeNode.Uri, new List<Node>() { });
+            ArrangeMocks(AboutNode.Uri, new List<Node>() { });
+            ArrangeMocks(ContactNode.Uri, new List<Node>() { });
+            var target = new WebCrawler(_factoryMock.Object, _httpMock.Object);
+
+            //Act
+            var result = target.Crawl(DomainBase);
+
+            // Assert
+            Assert.AreEqual(3, result.Nodes.Count);
+            Assert.AreEqual(HomeNode.Uri, result.Nodes[0].Uri);
+            Assert.AreEqual(AboutNode.Uri, result.Nodes[1].Uri);
+            Assert.AreEqual(ContactNode.Uri, result.Nodes[2].Uri);
+        }
+
+        [TestMethod]
+        public void When_PageContainsVisitedNode_Then_DontRepeatVisitedNode()
+        {
+            // Arrange
+            ArrangeMocks(DomainBase, new List<Node>() { HomeNode, AboutNode });
+            ArrangeMocks(HomeNode.Uri, new List<Node>() { BaseNode });
+            ArrangeMocks(AboutNode.Uri, new List<Node>() { BaseNode });
+            var target = new WebCrawler(_factoryMock.Object, _httpMock.Object);
+
+            //Act
+            var result = target.Crawl(DomainBase);
+
+            // Assert
+            Assert.AreEqual(2, result.Nodes.Count);
+            Assert.AreEqual(HomeNode.Uri, result.Nodes[0].Uri);
+            Assert.AreEqual(AboutNode.Uri, result.Nodes[1].Uri);
+            Assert.AreEqual(0, result.Nodes[0].Nodes[0].Nodes.Count);
+            Assert.AreEqual(0, result.Nodes[1].Nodes[0].Nodes.Count);
+        }
+
+        #region Helper Methods
+
+        private void ArrangeMocks(Uri linkUri, List<Node> nodeList)
+        {
+            var html = GenerateDummyHtml(nodeList);
+            ArrangeMocks(linkUri, true, html, linkUri, nodeList);
+        }
+
+        private void ArrangeMocks(Uri linkUri, bool isSuccess, string html, Uri requestUri, List<Node> nodeList)
+        {
+            _httpMock.Setup(m => m.Get(linkUri)).Returns(new HttpGetResponse() { IsSuccess = isSuccess, Content = html, RequestUri = requestUri });
+            _factoryMock.Setup(m => m.Create(DomainBase, html)).Returns(nodeList);
+        }
+
+        private string GenerateDummyHtml(List<Node> nodeList)
+        {
+            var builder = new StringBuilder();
+            foreach (var node in nodeList)
             {
-                factoryMock.Setup(m => m.Create(It.IsAny<Uri>(), item.Response.Content)).Returns(item.ListNode);
-                httpMock.Setup(m => m.Get(item.Uri)).Returns(item.Response);
+                builder.AppendFormat("<a href='{0}'>A</a>", node.Uri);
             }
-
-            var target = new WebCrawler(factoryMock.Object, httpMock.Object);
-            return target;
+            return builder.ToString();
         }
 
-        private class TestHttpReturn
-        {
-            public Uri Uri { get; set; }
-            public HttpGetResponse Response { get; set; }
-            public List<Node> ListNode { get; set; }
-        }
+        #endregion
     }
 }
