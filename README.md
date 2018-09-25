@@ -1,10 +1,12 @@
 # Buildit Crawler
 
-To build, test and run the code you will have to install docker on your Ubuntu machine. Then run the following commands to install the .NET SDK automatically and download the source code:
+This is a simple web crawler utility that saves the crawling results to a file in disk and prints it to the command line.
+
+To build, test and run the code you will have to install Docker on your Ubuntu machine. Then run the following commands to install the .NET SDK automatically and download the source code:
 
 ```bash
 # DOWNLOAD SDK AND SOURCE CODE
-docker run -i -t microsoft/dotnet:2.0-sdk-stretch /bin/bash
+docker run -i -t dstretch /bin/bash
 mkdir /home/buildit
 cd /home/buildit
 git clone https://github.com/alfpedraza/buildit.crawler
