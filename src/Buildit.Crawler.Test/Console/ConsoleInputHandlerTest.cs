@@ -7,6 +7,7 @@ using System;
 namespace Buildit.Crawler.Test.Console
 {
     [TestClass]
+    [TestCategory("UnitTest")]
     public class ConsoleInputHandlerTest
     {
         [TestMethod]

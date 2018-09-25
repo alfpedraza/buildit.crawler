@@ -10,6 +10,7 @@ using System.Text;
 namespace Buildit.Crawler.Test.Service
 {
     [TestClass]
+    [TestCategory("UnitTest")]
     public class WebCrawlerTest
     {
         #region Helper Members

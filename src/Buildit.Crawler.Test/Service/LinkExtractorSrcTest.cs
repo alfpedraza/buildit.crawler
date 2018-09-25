@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace Buildit.Crawler.Test.Service
 {
     [TestClass]
+    [TestCategory("UnitTest")]
     public class LinkExtractorSrcTest
     {
         [TestMethod]
