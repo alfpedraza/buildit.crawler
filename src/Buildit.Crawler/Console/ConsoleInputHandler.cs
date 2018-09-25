@@ -30,6 +30,7 @@ namespace Buildit.Crawler.Console
             WaitBeforeEnd = GetWaitBeforeEnd(args);
         }
 
+        // Gets a domain from the command line arguments ignoring any path.
         private Uri GetDomainUri(string[] args)
         {
             var argumentUriString = ReadArgument(args, FirstArgumentIndex, DefaultDomain);
@@ -39,6 +40,7 @@ namespace Buildit.Crawler.Console
             return result;
         }
 
+        // Gets a output file path from the command line arguments.
         private string GetOutputFilePath(string[] args)
         {
             var filePathFormat = ReadArgument(args, SecondArgumentIndex, DefaultOutputFilePathFormat);
@@ -46,6 +48,7 @@ namespace Buildit.Crawler.Console
             return result;
         }
 
+        // Gets a boolean flag to wait from the command line arguments.
         private bool GetWaitBeforeEnd(string[] args)
         {
             var waitString = ReadArgument(args, ThirdArgumentIndex, DefaultWaitBeforeEnd);
@@ -53,6 +56,7 @@ namespace Buildit.Crawler.Console
             return result;
         }
 
+        // Reads a value from the specified array. If the index doesn't exists, take the default value.
         private string ReadArgument(string[] args, int index, string defaultValue)
         {
             return (args.Length > index) ? args[index] : defaultValue;

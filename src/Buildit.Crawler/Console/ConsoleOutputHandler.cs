@@ -18,14 +18,25 @@ namespace Buildit.Crawler.Console
             _console = console;
         }
 
-        public void Write(string filePath, Node node, bool wait)
+        public string Generate(Node node)
         {
-            string content = _output.Generate(node);
-            _file.Write(filePath, content);
+            string result = _output.Generate(node);
+            return result;
+        }
 
-            _console.Write(content);
-            _console.Write(WaitText);
-            if (wait) _console.Wait();
+        public void Save(string filePath, string text)
+        {
+            _file.Write(filePath, text);
+        }
+
+        public void Write(string text, bool wait)
+        {
+            _console.Write(text);
+            if (wait)
+            {
+                _console.Write(WaitText);
+                _console.Wait();
+            }
         }
     }
 }

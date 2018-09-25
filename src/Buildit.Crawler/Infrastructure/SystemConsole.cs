@@ -4,7 +4,7 @@
     {
         public void Write(string content)
         {
-            System.Console.Write(content);
+            System.Console.WriteLine(content);
         }
 
         public void Wait()
