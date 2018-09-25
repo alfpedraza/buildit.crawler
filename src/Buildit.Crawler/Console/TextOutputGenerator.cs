@@ -27,8 +27,7 @@ namespace Buildit.Crawler.Console
             builder.Append(levelMargin);
 
             // Prints the node Uri and then its children.
-            var nodeUri = node.Uri.AbsoluteUri;
-            builder.AppendLine(nodeUri);
+            builder.AppendLine(node.Uri.AbsoluteUri);
             foreach (var child in node.Nodes)
             {
                 GenerateInternal(builder, child, level + 1);
