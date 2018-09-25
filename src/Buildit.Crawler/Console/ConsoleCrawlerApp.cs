@@ -17,12 +17,17 @@ namespace Buildit.Crawler.Console
 
         public void Run(string[] args)
         {
+            // Reads from the command line arguments.
             _input.ReadArguments(args);
             var domain = _input.DomainUri;
             var filePath = _input.OutputFilePath;
             var wait = _input.WaitBeforeEnd;
-            var result = _crawler.Crawl(domain);
-            _output.Write(filePath, result, wait);
+
+            // Crawls the domain and prints the results.
+            var node = _crawler.Crawl(domain);
+            var text = _output.Generate(node);
+            _output.Save(filePath, text);
+            _output.Write(text, wait);
         }
     }
 }

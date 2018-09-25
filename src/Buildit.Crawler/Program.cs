@@ -6,6 +6,7 @@ namespace Buildit.Crawler
     {
         public static void Main(string[] args)
         {
+            // Executes the console crawler application.
             var consoleApp = ConsoleCrawlerAppFactory.Create();
             consoleApp.Run(args);
         }
