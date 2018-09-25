@@ -9,45 +9,64 @@ namespace Buildit.Crawler.Test.Service
     [TestClass]
     public class NodeTest
     {
-        private readonly Uri DomainUri01 = new Uri("https://buildit.wiprodigital.com");
-        private readonly Uri DomainUri02 = new Uri("https://www.google.com");
-        private readonly Uri DomainUri03 = new Uri("/login?id=123", UriKind.Relative);
+        private readonly Uri DomainBase  = new Uri("https://buildit.wiprodigital.com");
+        private readonly Uri DomainUri1 = new Uri("https://www.google.com");
+        private readonly Uri DomainUri2 = new Uri("https://buildit.wiprodigital.com/about");
+        private readonly Uri DomainUri3 = new Uri("/login?id=123", UriKind.Relative);
 
         [TestMethod]
-        public void When_NoLinks_Then_ReturnNoNodes()
+        public void When_ThereAreNoLinks_Then_ReturnNoNodes()
         {
+            // Arrange
+            var html = string.Empty;
             var linkList = new List<Uri>() { };
-            var target = CreateTarget(linkList);
-            var actual = target.Create(DomainUri01, string.Empty);
-            Assert.AreEqual(actual.Count, 0);
+            var target = ArrangeTarget(linkList, html);
+
+            // Act
+            var result = target.Create(DomainBase, html);
+
+            // Assert
+            Assert.AreEqual(0, result.Count);
         }
 
         [TestMethod]
-        public void When_OneLink_Then_ReturnOneNode()
+        public void When_ThereIsOneLink_Then_ReturnOneNode()
         {
-            var linkList = new List<Uri>() { DomainUri01 };
-            var target = CreateTarget(linkList);
-            var actual = target.Create(DomainUri01, string.Empty);
-            Assert.AreEqual(actual.Count, 1);
-            Assert.AreEqual(actual[0].Uri, DomainUri01);
+            // Arrange
+            var html = string.Empty;
+            var linkList = new List<Uri>() { DomainUri1 };
+            var target = ArrangeTarget(linkList, html);
+
+            // Act
+            var result = target.Create(DomainBase, html);
+
+            // Assert
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(DomainUri1, result[0].Uri);
         }
 
         [TestMethod]
-        public void When_SeveralLinksUnordered_Then_ReturnSeveralNodesOrdered()
+        public void When_ThereAreSeveralUnorderedLinks_Then_ReturnSeveralOrderedNodes()
         {
-            var linkList = new List<Uri>() { DomainUri02, DomainUri01, DomainUri03 };
-            var target = CreateTarget(linkList);
-            var actual = target.Create(DomainUri01, string.Empty);
-            Assert.AreEqual(actual.Count, 3);
-            Assert.AreEqual(actual[0].Uri, DomainUri01);
-            Assert.AreEqual(actual[1].Uri, new Uri(DomainUri01, DomainUri03));
-            Assert.AreEqual(actual[2].Uri, DomainUri02);
+            // Arrange
+            var html = string.Empty;
+            var linkList = new List<Uri>() { DomainUri2, DomainUri1, DomainUri3 };
+            var target = ArrangeTarget(linkList, html);
+
+            // Act
+            var result = target.Create(DomainBase, html);
+
+            // Assert
+            Assert.AreEqual(3, result.Count);
+            Assert.AreEqual(DomainUri2, result[0].Uri);
+            Assert.AreEqual(new Uri(DomainBase, DomainUri3), result[1].Uri);
+            Assert.AreEqual(DomainUri1, result[2].Uri);
         }
 
-        public INodeFactory CreateTarget(List<Uri> linkList)
+        private INodeFactory ArrangeTarget(List<Uri> linkList, string html)
         {
             var mock = new Mock<ILinkExtractor>();
-            mock.Setup(m => m.GetHyperlinks(It.IsAny<string>())).Returns(linkList);
+            mock.Setup(m => m.GetHyperlinks(html)).Returns(linkList);
             var target = new NodeFactory(mock.Object);
             return target;
         }
