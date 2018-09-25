@@ -5,7 +5,6 @@ using System;
 namespace Buildit.Crawler.Test.Entities
 {
     [TestClass]
-    [TestCategory("UnitTest")]
     public class NodeTest
     {
         [TestMethod]

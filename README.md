@@ -34,9 +34,7 @@ commands:
 ```bash
 # TEST THE CODE
 cd /home/buildit/buildit.crawler/src/Buildit.Crawler.Test
-dotnet test --filter TestCategory=UnitTest
-dotnet test --filter TestCategory=IntegrationTest
-dotnet test --filter TestCategory=SystemTest
+dotnet test
 ```
 
 ## How to Run

@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace Buildit.Crawler.Test.Service
 {
     [TestClass]
-    [TestCategory("UnitTest")]
     public class NodeTest
     {
         private readonly Uri DomainBase  = new Uri("https://buildit.wiprodigital.com");

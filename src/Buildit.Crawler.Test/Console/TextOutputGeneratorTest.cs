@@ -7,7 +7,6 @@ using System.Collections.Generic;
 namespace Buildit.Crawler.Test.Console
 {
     [TestClass]
-    [TestCategory("UnitTest")]
     public class TextOutputGeneratorTest
     {
         private readonly string DomainUriString = "https://buildit.wiprodigital.com";
