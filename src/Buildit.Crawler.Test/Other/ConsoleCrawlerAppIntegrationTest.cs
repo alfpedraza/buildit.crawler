@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using System;
 
-namespace Buildit.Crawler.Test.Console
+namespace Buildit.Crawler.Test.Other
 {
     [TestClass]
     [TestCategory("IntegrationTest")]
