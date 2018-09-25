@@ -9,7 +9,7 @@ download the project source code automatically:
 
 ```bash
 # DOWNLOAD .NET SDK DOCKER IMAGE AND PROJECT SOURCE CODE
-docker run -i -t dstretch /bin/bash
+docker run -i -t microsoft/dotnet:2.0-sdk-stretch /bin/bash
 mkdir /home/buildit
 cd /home/buildit
 git clone https://github.com/alfpedraza/buildit.crawler
