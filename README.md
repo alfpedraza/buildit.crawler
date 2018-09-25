@@ -4,11 +4,11 @@ This is a simple web crawler utility that saves the crawling results to a file
 in disk and prints it to the command line.
 
 To build, test and run the code you will have to install Docker on your Ubuntu
-machine. Then run the following commands to install the .NET SDK image and to
+machine. Then run the following commands to install the .NET SDK image and
 download the project source code automatically:
 
 ```bash
-# DOWNLOAD SDK AND SOURCE CODE
+# DOWNLOAD .NET SDK DOCKER IMAGE AND PROJECT SOURCE CODE
 docker run -i -t dstretch /bin/bash
 mkdir /home/buildit
 cd /home/buildit
@@ -17,8 +17,8 @@ git clone https://github.com/alfpedraza/buildit.crawler
 
 ## How to Build
 
-Once you are in the bash command line, to build the code, just execute the
-following lines:
+Once you are in the Docker container bash command line, to build the code,
+execute the following lines:
 
 ```bash
 # BUILD THE CODE
@@ -47,12 +47,14 @@ cd /home/buildit/buildit.crawler/src/Buildit.Crawler
 dotnet run https://buildit.wiprodigital.com /home/crawler.txt true
 ```
 
-This command line utility accepts three parameters that can be modified, but
-they don't allow spaces. These are the parameters than can be changed:
+This command line utility accepts three parameters that can be modified
+(although they don't allow spaces).
 
-  - Domain to Crawl (e.g. https://buildit.wiprodigital.com)
-  - File Path to save the crawling result (e.g. /home/crawler.txt)
-  - Boolean Flag to wait for the user to press a key (e.g. true)
+These are the parameters than can be changed:
+
+  1. Domain to Crawl (e.g. https://buildit.wiprodigital.com)
+  2. File Path to save the crawling result (e.g. /home/crawler.txt)
+  3. Boolean Flag to wait for the user to press a key (e.g. true)
  
 
 ## Documented Trade-Offs
