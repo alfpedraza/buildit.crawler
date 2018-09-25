@@ -58,11 +58,11 @@ namespace Buildit.Crawler.Test.Console
 
             // Assert
             var expected =
-                "http://www.google.com/\r\n" +
-                "    http://www.google.com/car.jpg\r\n" +
-                "    http://www.google.com/contact.html\r\n" +
-                "    http://www.google.com/home.html\r\n" +
-                "    http://www.google.com/house.jpg\r\n";
+                "http://www.google.com/" + Environment.NewLine +
+                "    http://www.google.com/car.jpg" + Environment.NewLine +
+                "    http://www.google.com/contact.html" + Environment.NewLine +
+                "    http://www.google.com/home.html" + Environment.NewLine +
+                "    http://www.google.com/house.jpg" + Environment.NewLine;
             Assert.AreEqual(expected, fileText);
             Assert.AreEqual(fileText, consoleText);
         }
@@ -91,13 +91,13 @@ namespace Buildit.Crawler.Test.Console
 
             // Assert
             var expected =
-                "http://www.google.com/\r\n" +
-                "    http://www.google.com/about.html\r\n" +
-                "        http://www.google.com/contact.html\r\n" +
-                "            http://www.google.com/about.html\r\n" +
-                "            http://www.google.com/home.html\r\n" +
-                "        http://www.google.com/home.html\r\n" +
-                "    http://www.google.com/contact.html\r\n";
+                "http://www.google.com/" + Environment.NewLine +
+                "    http://www.google.com/about.html" + Environment.NewLine +
+                "        http://www.google.com/contact.html" + Environment.NewLine +
+                "            http://www.google.com/about.html" + Environment.NewLine +
+                "            http://www.google.com/home.html" + Environment.NewLine +
+                "        http://www.google.com/home.html" + Environment.NewLine +
+                "    http://www.google.com/contact.html" + Environment.NewLine;
             Assert.AreEqual(expected, fileText);
             Assert.AreEqual(fileText, consoleText);
         }

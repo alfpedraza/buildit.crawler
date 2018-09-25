@@ -22,7 +22,7 @@ namespace Buildit.Crawler.Test.Console
             var actual = target.Generate(node);
 
             //Assert
-            var expected = "https://buildit.wiprodigital.com/home.html\r\n";
+            var expected = "https://buildit.wiprodigital.com/home.html" + Environment.NewLine;
             Assert.AreEqual(expected, actual);
         }
 
@@ -39,8 +39,8 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/\r\n" +
-                "    https://buildit.wiprodigital.com/home.html\r\n";
+                "https://buildit.wiprodigital.com/" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine;
             Assert.AreEqual(expected, actual);
         }
 
@@ -57,9 +57,9 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/\r\n" +
-                "    https://buildit.wiprodigital.com/home.html\r\n" +
-                "    https://buildit.wiprodigital.com/about.html\r\n";
+                "https://buildit.wiprodigital.com/" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/about.html" + Environment.NewLine;
             Assert.AreEqual(expected, actual);
         }
 
@@ -79,16 +79,16 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/\r\n" +
-                "    https://buildit.wiprodigital.com/home.html\r\n" +
-                "        https://buildit.wiprodigital.com/about.html\r\n" +
-                "        https://buildit.wiprodigital.com/contact.html\r\n" +
-                "    https://buildit.wiprodigital.com/about.html\r\n" +
-                "        https://buildit.wiprodigital.com/home.html\r\n" +
-                "        https://buildit.wiprodigital.com/contact.html\r\n" +
-                "    https://buildit.wiprodigital.com/contact.html\r\n" +
-                "        https://buildit.wiprodigital.com/home.html\r\n" +
-                "        https://buildit.wiprodigital.com/about.html\r\n";
+                "https://buildit.wiprodigital.com/" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/about.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/about.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
+                "    https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
+                "        https://buildit.wiprodigital.com/about.html" + Environment.NewLine;
             Assert.AreEqual(expected, actual);
         }
 
