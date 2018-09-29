@@ -14,10 +14,10 @@ namespace Buildit.Crawler.Test.Other
             var domain = "https://buildit.wiprodigital.com/";
             var filePath = "test.txt";
             var args = new string[] { domain, filePath, "false" };
+            var target = ConsoleCrawlerAppFactory.Create();
             System.IO.File.Delete(filePath);
 
             // Act
-            var target = ConsoleCrawlerAppFactory.Create();
             target.Run(args);
 
             // Assert

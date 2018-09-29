@@ -8,9 +8,9 @@ namespace Buildit.Crawler.Console
         private const int FirstArgumentIndex = 0;
         private const int SecondArgumentIndex = 1;
         private const int ThirdArgumentIndex = 2;
-        public const string DefaultDomain = "https://buildit.wiprodigital.com";
+        public const string DefaultDomain = "https://buildit.wiprodigital.com/";
         public const string DefaultOutputFilePathFormat = "crawl_{0:yyyyMMdd_HHmmss}.txt";
-        public const string DefaultWaitBeforeEnd = "true";
+        public const string DefaultWaitBeforeEnd = "True";
 
         private readonly IClock _clock;
 

@@ -19,6 +19,7 @@ namespace Buildit.Crawler.Test.Other
         private readonly Uri AboutUri = new Uri("http://www.google.com/about.html");
         private readonly Uri HouseUri = new Uri("http://www.google.com/house.jpg");
         private readonly Uri CarUri = new Uri("http://www.google.com/car.jpg");
+        private readonly string _n = Environment.NewLine;
 
         private Mock<IHttp> _httpMock;
         private Mock<IFile> _fileMock;
@@ -59,11 +60,11 @@ namespace Buildit.Crawler.Test.Other
 
             // Assert
             var expected =
-                "http://www.google.com/" + Environment.NewLine +
-                "    http://www.google.com/car.jpg" + Environment.NewLine +
-                "    http://www.google.com/contact.html" + Environment.NewLine +
-                "    http://www.google.com/home.html" + Environment.NewLine +
-                "    http://www.google.com/house.jpg" + Environment.NewLine;
+                "http://www.google.com/"                 + _n +
+                "    http://www.google.com/car.jpg"      + _n +
+                "    http://www.google.com/contact.html" + _n +
+                "    http://www.google.com/home.html"    + _n +
+                "    http://www.google.com/house.jpg"    + _n;
             Assert.AreEqual(expected, fileText);
             Assert.AreEqual(fileText, consoleText);
         }
@@ -92,13 +93,13 @@ namespace Buildit.Crawler.Test.Other
 
             // Assert
             var expected =
-                "http://www.google.com/" + Environment.NewLine +
-                "    http://www.google.com/about.html" + Environment.NewLine +
-                "        http://www.google.com/contact.html" + Environment.NewLine +
-                "            http://www.google.com/about.html" + Environment.NewLine +
-                "            http://www.google.com/home.html" + Environment.NewLine +
-                "        http://www.google.com/home.html" + Environment.NewLine +
-                "    http://www.google.com/contact.html" + Environment.NewLine;
+                "http://www.google.com/"                       + _n +
+                "    http://www.google.com/about.html"         + _n +
+                "        http://www.google.com/contact.html"   + _n +
+                "            http://www.google.com/about.html" + _n +
+                "            http://www.google.com/home.html"  + _n +
+                "        http://www.google.com/home.html"      + _n +
+                "    http://www.google.com/contact.html"       + _n;
             Assert.AreEqual(expected, fileText);
             Assert.AreEqual(fileText, consoleText);
         }
