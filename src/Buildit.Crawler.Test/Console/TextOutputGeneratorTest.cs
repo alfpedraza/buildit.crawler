@@ -10,6 +10,7 @@ namespace Buildit.Crawler.Test.Console
     public class TextOutputGeneratorTest
     {
         private readonly string DomainUriString = "https://buildit.wiprodigital.com";
+        private readonly string _n = Environment.NewLine;
 
         [TestMethod]
         public void When_NodeHasNoChildren_Then_ReturnOnlyRootNode()
@@ -22,7 +23,7 @@ namespace Buildit.Crawler.Test.Console
             var actual = target.Generate(node);
 
             //Assert
-            var expected = "https://buildit.wiprodigital.com/home.html" + Environment.NewLine;
+            var expected = "https://buildit.wiprodigital.com/home.html" + _n;
             Assert.AreEqual(expected, actual);
         }
 
@@ -39,8 +40,8 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine;
+                "https://buildit.wiprodigital.com/"              + _n +
+                "    https://buildit.wiprodigital.com/home.html" + _n;
             Assert.AreEqual(expected, actual);
         }
 
@@ -57,9 +58,9 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/about.html" + Environment.NewLine;
+                "https://buildit.wiprodigital.com/"               + _n +
+                "    https://buildit.wiprodigital.com/home.html"  + _n +
+                "    https://buildit.wiprodigital.com/about.html" + _n;
             Assert.AreEqual(expected, actual);
         }
 
@@ -79,16 +80,16 @@ namespace Buildit.Crawler.Test.Console
 
             //Assert
             var expected =
-                "https://buildit.wiprodigital.com/" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/about.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/about.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
-                "    https://buildit.wiprodigital.com/contact.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/home.html" + Environment.NewLine +
-                "        https://buildit.wiprodigital.com/about.html" + Environment.NewLine;
+                "https://buildit.wiprodigital.com/"                     + _n +
+                "    https://buildit.wiprodigital.com/home.html"        + _n +
+                "        https://buildit.wiprodigital.com/about.html"   + _n +
+                "        https://buildit.wiprodigital.com/contact.html" + _n +
+                "    https://buildit.wiprodigital.com/about.html"       + _n +
+                "        https://buildit.wiprodigital.com/home.html"    + _n +
+                "        https://buildit.wiprodigital.com/contact.html" + _n +
+                "    https://buildit.wiprodigital.com/contact.html"     + _n +
+                "        https://buildit.wiprodigital.com/home.html"    + _n +
+                "        https://buildit.wiprodigital.com/about.html"   + _n;
             Assert.AreEqual(expected, actual);
         }
 
