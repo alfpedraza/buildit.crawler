@@ -95,7 +95,9 @@ namespace Buildit.Crawler.Test.Console
 
         private Node CreateNode(string linkUriString)
         {
-            var result = new Node(new Uri(DomainUriString), new Uri(linkUriString, UriKind.Relative));
+            var domainUri = new Uri(DomainUriString);
+            var linkUri = new Uri(linkUriString, UriKind.Relative);
+            var result = new Node(domainUri, linkUri);
             return result;
         }
     }

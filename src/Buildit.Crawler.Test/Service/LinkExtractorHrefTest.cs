@@ -11,41 +11,31 @@ namespace Buildit.Crawler.Test.Service
         [TestMethod]
         public void When_HrefIsGoodFormatted01_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href='link.html'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html", result[0].OriginalString);
+             AssertLink("<a href='link.html'>", "link.html");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted02_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href=\"link.html\">");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html", result[0].OriginalString);
+            AssertLink("<a href=\"link.html\">", "link.html");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted03_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href=\"link.html'\">");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html'", result[0].OriginalString);
+            AssertLink("<a href=\"link.html'\">", "link.html'");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted04_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href='link.html\"'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html\"", result[0].OriginalString);
+            AssertLink("<a href='link.html\"'>", "link.html\"");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted05_Then_ReturnLinks()
         {
-            var result = GetLinks("<a id='23' href='link.html' title='3453'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html", result[0].OriginalString);
+            AssertLink("<a id='23' href='link.html' title='3453'>", "link.html");
         }
 
         [TestMethod]
@@ -60,77 +50,67 @@ namespace Buildit.Crawler.Test.Service
         [TestMethod]
         public void When_HrefIsGoodFormatted07_Then_ReturnLinks()
         {
-            var result = GetLinks("<a HrEf=\"link.html\">");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("link.html", result[0].OriginalString);
+            AssertLink("<a HrEf=\"link.html\">", "link.html");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted08_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href='http://www.google.com/about'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("http://www.google.com/about", result[0].OriginalString);
+            AssertLink("<a href='http://www.google.com/about'>", "http://www.google.com/about");
         }
 
         [TestMethod]
         public void When_HrefIsGoodFormatted09_Then_ReturnLinks()
         {
-            var result = GetLinks("<a href='../../about'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("../../about", result[0].OriginalString);
+            AssertLink("<a href='../../about'>", "../../about");
         }
 
         [TestMethod]
         public void When_HrefIsDuplicated01_Then_ReturnUniqueHref()
         {
-            var result = GetLinks("<a href='about'><a href='about'><a href='about'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("about", result[0].OriginalString);
+            AssertLink("<a href='about'><a href='about'><a href='about'>", "about");
         }
 
         [TestMethod]
         public void When_HrefIsDuplicated02_Then_ReturnUniqueHref()
         {
-            var result = GetLinks("<a href='about'><img src='about'><a href='about'>");
-            Assert.AreEqual(1, result.Count);
-            Assert.AreEqual("about", result[0].OriginalString);
+            AssertLink("<a href='about'><img src='about'><a href='about'>", "about");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted01_Then_NoLinkReturned()
         {
-            AssertNoResults("<ahref='link.html'>");
+            AssertNoLinks("<ahref='link.html'>");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted02_Then_NoLinkReturned()
         {
-            AssertNoResults("<href='link.html'>");
+            AssertNoLinks("<href='link.html'>");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted03_Then_NoLinkReturned()
         {
-            AssertNoResults("<a hrf='link.html'>");
+            AssertNoLinks("<a hrf='link.html'>");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted04_Then_NoLinkReturned()
         {
-            AssertNoResults("<a href='link.html>");
+            AssertNoLinks("<a href='link.html>");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted05_Then_NoLinkReturned()
         {
-            AssertNoResults("<a href=link.html'>");
+            AssertNoLinks("<a href=link.html'>");
         }
 
         [TestMethod]
         public void When_HrefIsBadFormatted06_Then_NoLinkReturned()
         {
-            AssertNoResults("<a href=\"link.html'>");
+            AssertNoLinks("<a href=\"link.html'>");
         }
 
         private List<Uri> GetLinks(string html)
@@ -140,7 +120,14 @@ namespace Buildit.Crawler.Test.Service
             return result;
         }
 
-        private void AssertNoResults(string html)
+        private void AssertLink(string html, string linkUriString)
+        {
+            var result = GetLinks(html);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual(linkUriString, result[0].OriginalString);
+        }
+
+        private void AssertNoLinks(string html)
         {
             var result = GetLinks(html);
             Assert.AreEqual(0, result.Count);
